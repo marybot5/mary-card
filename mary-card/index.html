@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="Description" content="Put your description here.">
+  <base href="/">
+
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background-color: #ededed;
+    }
+  </style>
+  <title>mary-card</title>
+</head>
+
+<body>
+  <button id="duplicateBtn" class= "btn">Duplicate</button>
+<button id ="changeBGColorBtn" class="btn"> Change Background Color</button>
+<button id="changeTitleBtn" class = "btn">Change Title</button>
+<button id="deleteBtn" class =  "btn">Delete</button>
+<div id="app">
+  <mary-card></mary-card>
+</div>
+
+<script type="module" src="./src/mary-card.js"></script>
+<script>
+
+  //toggle 1st instance of stats/description
+  document.querySelector('button[data-toggle-btn]').addEventListener('click', (e) => {
+    const details = document.querySelector('mary-card').shadowRoot.querySelector('details')
+    console.log(details);
+
+    if(details.getAttribute('open')) {
+      details.removeAttribute('open');
+    } else {
+      details.setAttribute('open', 'open');
+    }
+  });
+
+  //duplicate 1st button
+  document.querySelector('.duplicate').addEventListener('click', function (e) {
+    const itemToClone = document.querySelector('mary-card').cloneNode();
+    document.querySelector("#app").appendChild(itemToClone);
+  });
+
+  //modify the name of 1st item
+  document.querySelector('.modifytitle').addEventListener('click', function(e) {
+    let name = prompt("Name Mary...");
+    if (name) {
+      document.querySelector('mary-card').name = name;
+    }
+  });
+const changeColorButton = document.querySelector("#changeBGColorBtn");
+const changeTitle = document.querySelector("#changeTitleBtn");
+
+//delete the last item
+document.querySelector("#deleteBtn").addEventListener('click', function (e) {
+  let wantsTo = confirm("Are you sure?");
+  if(wantsTo) {
+    if(document.querySelector('#app :last-child') !== document.querySelector('mary-card')) {
+      document.querySelector('#app :last-child').remove();
+    } else {
+      alert("cannot delete!")
+    }
+  }
+});
+
+const firstCard = document.querySelector('.all');
+const milkCatDescription = document.querySelector('p');
+const detailBtn = document.getElementById("detailBtn");
+milkCatDescription.style.display = "none";
+duplicateBtn.addEventListener("click", function(e){
+  const cloneCard = firstCard.cloneNode(true);
+  document.body.appendChild(cloneCard);
+});
+
+detailBtn.addEventListener("mouseenter", (event) => {
+  event.target.style.background= "yellow";
+});
+
+detailBtn.addEventListener("mouseleave", (event) => {
+event.target.style.background = "";
+  detailBtn.blur()
+});
+
+
+detailBtn.addEventListener("click", function(e) {
+  var paragraphs = milkCatDescription;
+  if (paragraphs.style.display === "none") {
+    paragraphs.style.display = "block";
+  } else {
+    paragraphs.style.display = "none";
+  }
+});
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+changeColorButton.addEventListener("click", function(e) {
+  firstCard.style.backgroundColor = getRandomColor();
+});
+
+changeTitle.addEventListener("click", function(e) {
+  var x = document.getElementById("mainTitle");
+  if(x.innerHTML === "Week 3 Homework!") {
+    x.innerHTML = "Something Else";
+  } else {
+    x.innerHTML = "Week 3 Homework!";
+  }
+});
+
+deleteBtn.addEventListener("click", function(e) {
+  document.body.removeChild(document.querySelector('.all'));
+});
+</script>
+</body>
+
+</html>
