@@ -1,3 +1,6 @@
+import "@lrnwebcomponents/meme-maker/meme-maker.js";
+import "@lrnwebcomponents/moar-sarcasm/moar-sarcasm.js";
+
 import { LitElement, html, css } from 'lit';
 
 export class MyElement extends LitElement {
